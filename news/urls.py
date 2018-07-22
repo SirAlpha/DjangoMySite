@@ -17,13 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from django.urls import include, path
+from django.views.generic import ListView, DetailView
+from news.models import Articles
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    # path('webexample/', include('webexample.urls')),
-    url(r'^', include('mainApp.urls')),
-    # url(r'^webexample/', include('webexample.urls'))
-    # url(r'^$', include('mainApp.urls')),
-    url(r'^news/', include('news.urls')),
+    url(r'^$', ListView.as_view(queryset=Articles.objects.all().order_by("-date") [:20],
+                                template_name="news/posts.html")),
 
 ]
